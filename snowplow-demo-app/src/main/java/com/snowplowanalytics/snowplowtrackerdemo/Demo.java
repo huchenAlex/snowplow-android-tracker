@@ -24,11 +24,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.text.method.ScrollingMovementMethod;
 
+import com.sjl.foreground.Foreground;
 import com.snowplowanalytics.snowplow.tracker.emitter.HttpMethod;
 import com.snowplowanalytics.snowplow.tracker.emitter.RequestCallback;
 import com.snowplowanalytics.snowplow.tracker.emitter.RequestSecurity;
 import com.snowplowanalytics.snowplow.tracker.Tracker;
 import com.snowplowanalytics.snowplow.tracker.Emitter;
+import com.snowplowanalytics.snowplow.tracker.tracker.ForegroundListener;
 import com.snowplowanalytics.snowplow.tracker.utils.Util;
 import com.snowplowanalytics.snowplowtrackerdemo.utils.DemoUtils;
 import com.snowplowanalytics.snowplowtrackerdemo.utils.TrackerEvents;
@@ -53,11 +55,20 @@ public class Demo extends Activity {
     private int eventsSent = 0;
     private Context context;
 
+    private Foreground.Binding foregroundBinding = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_classic_demo);
+        foregroundBinding = Foreground.get(getApplication()).addListener(new ForegroundListener());
+        setContentView(R.layout.activity_demo);
         setupTrackerListener();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        foregroundBinding.unbind();
     }
 
     @Override
@@ -73,17 +84,11 @@ public class Demo extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (tracker != null) {
-            tracker.getSession().setIsBackground(true);
-        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (tracker != null) {
-            tracker.getSession().setIsBackground(false);
-        }
     }
 
     /**
@@ -148,7 +153,7 @@ public class Demo extends Activity {
                 }
 
                 if (!uri.equals("")) {
-                    eventsCreated += 28;
+                    eventsCreated += 14;
                     final String made = "Made: " + eventsCreated;
                     _eventsCreated.setText(made);
                     TrackerEvents.trackAll(tracker);

@@ -58,6 +58,7 @@ public class DemoUtils {
      * @return a new Classic Tracker
      */
     private static Tracker getTracker(Emitter emitter, Subject subject, Context context) {
+        Tracker.close();
         return new Tracker.TrackerBuilder(emitter, namespace, appId, context)
                 .level(LogLevel.DEBUG)
                 .base64(false)
@@ -65,6 +66,8 @@ public class DemoUtils {
                 .subject(subject)
                 .threadCount(20)
                 .sessionContext(true)
+                .mobileContext(true)
+                .geoLocationContext(true)
                 .build();
     }
 
