@@ -126,4 +126,7 @@ public class Parameters {
     public static final String APP_ERROR_THREAD_NAME = "threadName";
     public static final String APP_ERROR_THREAD_ID = "threadId";
     public static final String APP_ERROR_LANG = "progLang";
+
+    // Application Focus
+    public static final String APP_FOCUS_FOREGROUND = "isForeground";
 }

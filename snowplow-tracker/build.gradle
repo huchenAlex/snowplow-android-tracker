@@ -71,6 +71,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:support-v4:24.0.0'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
+    compile 'com.sjl:Foredroid:1.0.0'
 
     androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.3.1'
 }
